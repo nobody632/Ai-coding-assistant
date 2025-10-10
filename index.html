@@ -129,6 +129,12 @@
           body: JSON.stringify({ prompt: input })
         });
 
+        if (!response.ok) {
+          const errorText = await response.text();
+          updateLastAIMessage(`Server error: ${errorText}`);
+          return;
+        }
+
         const data = await response.json();
         updateLastAIMessage(data.reply);
       } catch (error) {
